@@ -1,0 +1,25 @@
+{
+  "name": "@peaceroad/markdown-it-renderer-image",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peaceroad/p7d-markdown-it-renderer-image.git"
+  },
+  "author": "peaceroad <peaceroad@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/peaceroad/p7d-markdown-it-renderer-image/issues"
+  },
+  "homepage": "https://github.com/peaceroad/p7d-markdown-it-renderer-image#readme",
+  "dependencies": {
+    "image-size": "^1.0.0"
+  },
+  "devDependencies": {
+    "markdown-it": "^12.1.0"
+  }
+}
