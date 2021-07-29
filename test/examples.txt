@@ -1,4 +1,14 @@
 [Markdown]
+![](cat.jpg)
+[HTML]
+<p><img src="cat.jpg" alt="" width="400" height="300"></p>
+
+[Markdown]
+![Figure](cat.jpg)
+[HTML]
+<p><img src="cat.jpg" alt="Figure" width="400" height="300"></p>
+
+[Markdown]
 ![Figure](cat.jpg "A cat.")
 [HTML]
 <p><img src="cat.jpg" alt="Figure" title="A cat." width="400" height="300"></p>
