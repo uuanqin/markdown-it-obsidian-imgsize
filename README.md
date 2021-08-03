@@ -9,12 +9,13 @@ const fs = require('fs');
 const md = require('markdown-it')();
 const mdRendererImage = require('@peaceroad/markdown-it-renderer-image');
 md.use(mdRendererImage);
+
 const mdPath = '/tmp/markdown.md';
-const mdCont = fs.readFileSync(mdPath, 'UTF-8');
+const mdCont = fs.readFileSync(mdPath, 'utf-8');
 // ![The cat is sitting nearby.](cat.jpg "The photo taken by k_taka.")
 
 console.log(md.render(mdCont, {'mdPath': mdPath}));
-// If /tmp/cat.jpg is exists: 
+// If /tmp/cat.jpg is exists:
 // <p><img src="cat.jpg" alt="The cat is sitting nearby." title="The photo taken by k_taka." width="400" height="300"></p>
 ```
 
@@ -24,10 +25,10 @@ Or,
 const fs = require('fs');
 const md = require('markdown-it')();
 const mdRendererImage = require('@peaceroad/markdown-it-renderer-image');
-md.use(mdRendererImage);
-const mdPath = '/tmp/markdown.md';
-const mdCont = fs.readFileSync(mdPath, 'UTF-8');
 md.use(mdRendererImage, {'mdPath': mdPath});
+
+const mdPath = '/tmp/markdown.md';
+const mdCont = fs.readFileSync(mdPath, 'utf-8');
 
 console.log(md.render(mdCont));
 ```
@@ -57,5 +58,5 @@ Also, by using `{'lazyLoad': true}`:
 md.use(mdRendererImage, {'lazyLoad': true});
 
 console.log(md.render('![A cat.](cat@.jpg)', {'mdPath': mdPath}));
-// <p><img src="cat@2x.jpg" alt="A cat." width="400" height="300" loading="lazy"></p>
+// <p><img src="cat.jpg" alt="A cat." width="400" height="300" loading="lazy"></p>
 ```
