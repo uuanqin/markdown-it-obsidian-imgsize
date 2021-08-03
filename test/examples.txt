@@ -2,24 +2,33 @@
 ![](cat.jpg)
 [HTML]
 <p><img src="cat.jpg" alt="" width="400" height="300"></p>
+[HTML:lazy]
+<p><img src="cat.jpg" alt="" width="400" height="300" loading="lazy"></p>
 
 [Markdown]
 ![Figure](cat.jpg)
 [HTML]
 <p><img src="cat.jpg" alt="Figure" width="400" height="300"></p>
+[HTML:lazy]
+<p><img src="cat.jpg" alt="Figure" width="400" height="300" loading="lazy"></p>
 
 [Markdown]
 ![Figure](cat.jpg "A cat.")
 [HTML]
 <p><img src="cat.jpg" alt="Figure" title="A cat." width="400" height="300"></p>
+[HTML:lazy]
+<p><img src="cat.jpg" alt="Figure" title="A cat." width="400" height="300" loading="lazy"></p>
 
 [Markdown]
 ![Figure](cat@2x.jpg "A cat.")
 [HTML]
 <p><img src="cat@2x.jpg" alt="Figure" title="A cat." width="200" height="150"></p>
+[HTML:lazy]
+<p><img src="cat@2x.jpg" alt="Figure" title="A cat." width="200" height="150" loading="lazy"></p>
 
 [Markdown]
 ![Figure](cat_300dpi.jpg "A cat.")
 [HTML]
 <p><img src="cat_300dpi.jpg" alt="Figure" title="A cat." width="128" height="96"></p>
-
+[HTML:lazy]
+<p><img src="cat_300dpi.jpg" alt="Figure" title="A cat." width="128" height="96" loading="lazy"></p>

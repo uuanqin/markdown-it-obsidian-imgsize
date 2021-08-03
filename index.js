@@ -7,7 +7,9 @@ const sizeOf = require('image-size');
 module.exports = function renderer_image_plugin(md, option) {
 
   let opt = {
-    scaleSuffix: false,
+    'scaleSuffix': false,
+    'mdPath': '',
+    'lazyLoad': false,
   };
   if (option !== undefined) {
     for (let o in option) {
@@ -41,21 +43,48 @@ module.exports = function renderer_image_plugin(md, option) {
     return;
   }
 
+  function addLazyLoad(imgCont) {
+    imgCont = imgCont.replace(/>$/, ' loading="lazy">');
+    return imgCont;
+  }
+
   md.renderer.rules['image'] = function (tokens, idx, options, env, slf) {
     const token = tokens[idx];
-    let imgCont = '<img src="' + token.attrGet('src') + '" alt="' + token.content + '">';
+    let imgCont = '<img src="' + md.utils.escapeHtml(token.attrGet('src')) + '" alt="' + md.utils.escapeHtml(token.content) + '">';
     if (token.attrGet('title')) {
-      imgCont = imgCont.replace(/>$/, ' title="' + token.attrGet('title') + '">');
+      imgCont = imgCont.replace(/>$/, ' title="' + md.utils.escapeHtml(token.attrGet('title')) + '">');
     }
     let img = '';
-    if (env === undefined) return imgCont;
-    if (env.md === undefined) return imgCont;
-    img = path.dirname(env.md) + path.sep + token.attrGet('src');
-    if(!fs.existsSync(img)) return imgCont;
+    if (opt.mdPath) {
+      img = path.dirname(opt.mdPath);
+    } else {
+      if (env !== undefined) {
+        if (env.mdPath !== undefined) {
+          img = path.dirname(env.mdPath);
+        }
+      }
+    }
+    if(!img) {
+      if (opt.lazyLoad) {
+        imgCont = addLazyLoad(imgCont);
+      }
+      return imgCont;
+    }
+
+    img += path.sep + token.attrGet('src');
+    if(!fs.existsSync(img)) {
+      if (opt.lazyLoad) {
+        imgCont = addLazyLoad(imgCont);
+      }
+      return imgCont;
+    }
     setImgSize(token, img);
     if (!token.attrGet('width')) token.attrSet('width', '');
     if (!token.attrGet('height')) token.attrSet('height', '');
     imgCont = imgCont.replace(/>$/, ' width="' + token.attrGet('width') + '" height="' + token.attrGet('height') + '">');
+    if (opt.lazyLoad) {
+      imgCont = addLazyLoad(imgCont);
+    }
     return imgCont;
   }
 };
