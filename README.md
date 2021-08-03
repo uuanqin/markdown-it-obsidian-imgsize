@@ -25,9 +25,8 @@ Or,
 const fs = require('fs');
 const md = require('markdown-it')();
 const mdRendererImage = require('@peaceroad/markdown-it-renderer-image');
-md.use(mdRendererImage, {'mdPath': mdPath});
-
 const mdPath = '/tmp/markdown.md';
+md.use(mdRendererImage, {'mdPath': mdPath});
 const mdCont = fs.readFileSync(mdPath, 'utf-8');
 
 console.log(md.render(mdCont));
