@@ -64,6 +64,12 @@ md.use(mdRendererImage, {'resize': true});
 console.log(md.render('![A cat.](cat.jpg "Resize:50%")', {'mdPath': mdPath}));
 // <p><img src="cat.jpg" alt="A cat." width="200" height="150"></p>
 
+console.log(md.render('![A cat.](cat.jpg "リサイズ：50%")', {'mdPath': mdPath}));
+// <p><img src="cat.jpg" alt="A cat." width="200" height="150"></p>
+
+console.log(md.render('![A cat.](cat.jpg "サイズ変更：50%")', {'mdPath': mdPath}));
+// <p><img src="cat.jpg" alt="A cat." width="200" height="150"></p>
+
 console.log(md.render('![A cat.](cat.jpg "The photo taken by k_taka. The shown photo have been resized to 50%.")', {'mdPath': mdPath}));
 // <p><img src="cat.jpg" alt="A cat." title="The photo taken by k_taka. The shown photo have been resized to 50%." width="200" height="150"></p>
 
