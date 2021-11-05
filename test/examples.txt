@@ -19,12 +19,6 @@
 [HTML:lazy]
 <p><img src="cat.jpg" alt="Figure" title="A cat." width="400" height="300" loading="lazy"></p>
 
-[Markdown]
-![Figure](cat@2x.jpg "A cat.")
-[HTML]
-<p><img src="cat@2x.jpg" alt="Figure" title="A cat." width="200" height="150"></p>
-[HTML:lazy]
-<p><img src="cat@2x.jpg" alt="Figure" title="A cat." width="200" height="150" loading="lazy"></p>
 
 [Markdown]
 ![Figure](cat_300dpi.jpg "A cat.")
@@ -32,3 +26,39 @@
 <p><img src="cat_300dpi.jpg" alt="Figure" title="A cat." width="128" height="96"></p>
 [HTML:lazy]
 <p><img src="cat_300dpi.jpg" alt="Figure" title="A cat." width="128" height="96" loading="lazy"></p>
+
+[Markdown]
+![Figure](cat.jpg "resize:80%")
+[HTML]
+<p><img src="cat.jpg" alt="Figure" title="resize:80%" width="320" height="240"></p>
+
+[Markdown]
+![Figure](cat.jpg "The shown photo have been resized to 50%.")
+[HTML]
+<p><img src="cat.jpg" alt="Figure" title="The shown photo have been resized to 50%." width="200" height="150"></p>
+
+[Markdown]
+![Figure](cat.jpg "リサイズ：80%")
+[HTML]
+<p><img src="cat.jpg" alt="Figure" title="リサイズ：80%" width="320" height="240"></p>
+
+[Markdown]
+![Figure](cat.jpg "80%にサイズ変更")
+[HTML]
+<p><img src="cat.jpg" alt="Figure" title="80%にサイズ変更" width="320" height="240"></p>
+
+[Markdown]
+![Figure](cat@2x.jpg "resize:50%")
+[HTML]
+<p><img src="cat@2x.jpg" alt="Figure" title="resize:50%" width="100" height="75"></p>
+
+[Markdown]
+![Figure](cat.jpg "resize:320px")
+[HTML]
+<p><img src="cat.jpg" alt="Figure" title="resize:320px" width="320" height="240"></p>
+
+[Markdown]
+![Figure](cat@2x.jpg "resize:320px")
+[HTML]
+<p><img src="cat@2x.jpg" alt="Figure" title="resize:320px" width="320" height="240"></p>
+

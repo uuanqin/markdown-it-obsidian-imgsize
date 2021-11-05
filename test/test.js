@@ -5,9 +5,9 @@ const mdLazy = require('markdown-it')();
 const mdPat = require('markdown-it')();
 const mdRendererImage = require('../index.js');
 
-md.use(mdRendererImage, {'scaleSuffix': true});
+md.use(mdRendererImage, {'scaleSuffix': true, 'resize': true});
 mdLazy.use(mdRendererImage, {'scaleSuffix': true, 'lazyLoad': true});
-mdPat.use(mdRendererImage, {'scaleSuffix': true, 'mdPath': __dirname + '/examples.md'});
+mdPat.use(mdRendererImage, {'scaleSuffix': true, 'resize': true, 'mdPath': __dirname + '/examples.md'});
 
 const example = __dirname + '/examples.txt';
 let mdPath = __dirname + '/examples.md';
@@ -37,7 +37,7 @@ while(n < ms0.length) {
 n = 1;
 
 const h0 = md.render(fs.readFileSync('./test/test.md', 'utf-8').trim(), {'mdPath': './test/test.md'});
-const c0 =     '<p><img src="cat.jpg" alt="alt" width="400" height="300"></p>\n';
+const c0 = '<p><img src="cat.jpg" alt="A cat" width="400" height="300"></p>\n';
 try {
   assert.strictEqual(h0, c0);
 } catch(e) {
@@ -62,20 +62,25 @@ while(n < ms.length) {
     console.log('H: ' + h +'C: ' + ms[n].html);
   };
 
-  const hLazy = mdLazy.render(m, renderEnv);
-  try {
-    assert.strictEqual(hLazy, ms[n].htmlLazy);
-  } catch(e) {
-    console.log('incorrect(Lazy): ');
-    console.log('H: ' + hLazy +'C: ' + ms[n].htmlLazy);
-  };
+  if (ms[n].htmlLazy !== undefined) {
+    const hLazy = mdLazy.render(m, renderEnv);
+    try {
+      assert.strictEqual(hLazy, ms[n].htmlLazy);
+    } catch(e) {
+      console.log('incorrect(Lazy): ');
+      console.log('H: ' + hLazy +'C: ' + ms[n].htmlLazy);
+    };
+  }
 
-  const hPat = mdPat.render(m);
-  try {
-    assert.strictEqual(hPat, ms[n].html);
-  } catch(e) {
-    console.log('incorrect(mdPath): ');
-    console.log('H: ' + hLazy +'C: ' + ms[n].html);
-  };
+  if (ms[n].html !== undefined) {
+    const hPat = mdPat.render(m);
+    try {
+      assert.strictEqual(hPat, ms[n].html);
+    } catch(e) {
+      console.log('incorrect(mdPath): ');
+      console.log('H: ' + hPat +'C: ' + ms[n].html);
+    };
+  }
+
   n++;
 }

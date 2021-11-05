@@ -34,6 +34,8 @@ console.log(md.render(mdCont));
 
 ## Option
 
+### Setting dpi by filename scale suffix
+
 You can adjust the height and width attributes by using the option `{'scaleSuffix': true}`.
 
 ```js
@@ -51,7 +53,36 @@ console.log(md.render('![A cat.](cat_300ppi.jpg)', {'mdPath': mdPath}));
 
 This is identified by `imageFileName.match(/[@._-]([0-9]+)(x|dpi|ppi)$/)`
 
-Also, by using `{'lazyLoad': true}`:
+
+### Setting layout scale by title attribute
+
+Option to resize based on the value of the title attribute: `{resize: true}`
+
+```js
+md.use(mdRendererImage, {'resize': true});
+
+console.log(md.render('![A cat.](cat.jpg "Resize:50%")', {'mdPath': mdPath}));
+// <p><img src="cat.jpg" alt="A cat." width="200" height="150"></p>
+
+console.log(md.render('![A cat.](cat.jpg "The photo taken by k_taka. The shown photo have been resized to 50%.")', {'mdPath': mdPath}));
+// <p><img src="cat.jpg" alt="A cat." title="The photo taken by k_taka. The shown photo have been resized to 50%." width="200" height="150"></p>
+
+console.log(md.render('![Figure](cat.jpg "resize:320px")', {'mdPath': mdPath}));
+// <p><img src="cat.jpg" alt="Figure" title="resize:320px" width="320" height="240"></p>
+
+console.log(md.render('![Figure](cat@2x.jpg "resize:320px"))', {'mdPath': mdPath}));
+// <p><img src="cat@2x.jpg" alt="Figure" title="resize:320px" width="320" height="240"></p>
+```
+
+This is identified by `imageTitleAttribute.match(/(?:(?:(?:大きさ|サイズ)の?変更|リサイズ|resize(?:d to)?)? *[:：]? *([0-9]+)([%％]|px)|([0-9]+)([%％]|px)に(?:(?:大きさ|サイズ)を?変更|リサイズ))/i)`
+
+If `px` is specified, the numerical value is treated as the width after resizing.
+
+Notice: Other Markdown extended notations may specify a caption in the title attribute. Therefore, think carefully about whether to enable this option.
+
+### Setting lazy load
+
+By using `{'lazyLoad': true}`, it can have `loading="lazy"` attribute.
 
 ```js
 md.use(mdRendererImage, {'lazyLoad': true});

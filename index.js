@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const sizeOf = require('image-size');
+const { has } = require('markdown-it/lib/common/utils');
 
 module.exports = function renderer_image_plugin(md, option) {
 
@@ -10,6 +11,7 @@ module.exports = function renderer_image_plugin(md, option) {
     'scaleSuffix': false,
     'mdPath': '',
     'lazyLoad': false,
+    'resize': false,
   };
   if (option !== undefined) {
     for (let o in option) {
@@ -36,6 +38,26 @@ module.exports = function renderer_image_plugin(md, option) {
           w = Math.round(w * 96 / rs[1]);
           h = Math.round(h * 96 / rs[1]);
         }
+      }
+    }
+    const imgTitle = imgToken.attrGet('title');
+    if (imgTitle && opt.resize) {
+      const resizeReg = /(?:(?:(?:大きさ|サイズ)の?変更|リサイズ|resize(?:d to)?)? *[:：]? *([0-9]+)([%％]|px)|([0-9]+)([%％]|px)に(?:(?:大きさ|サイズ)を?変更|リサイズ))/i;
+      const hasResizeSetting = imgTitle.match(resizeReg);
+      if(hasResizeSetting) {
+        const resizeValue = +hasResizeSetting[1];
+        const resizeUnit = hasResizeSetting[2];
+        //console.log('w: ' + w + ', h: ' + h);
+        if (resizeUnit.match(/[%％]/)) {
+          w = Math.round(w * resizeValue / 100);
+          h = Math.round(h * resizeValue / 100);
+        }
+        if (resizeUnit.match(/px/)) {
+          const bw = w;
+          w = Math.round(resizeValue);
+          h = Math.round(h * resizeValue / bw);
+        }
+        //console.log('w: ' + w + ', h: ' + h);
       }
     }
     imgToken.attrJoin('width', w);
