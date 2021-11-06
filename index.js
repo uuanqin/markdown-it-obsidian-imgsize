@@ -3,7 +3,6 @@
 const fs = require('fs');
 const path = require('path');
 const sizeOf = require('image-size');
-const { has } = require('markdown-it/lib/common/utils');
 
 module.exports = function renderer_image_plugin(md, option) {
 
