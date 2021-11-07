@@ -7,10 +7,10 @@ const sizeOf = require('image-size');
 module.exports = function renderer_image_plugin(md, option) {
 
   let opt = {
-    'scaleSuffix': false,
-    'mdPath': '',
-    'lazyLoad': false,
-    'resize': false,
+    scaleSuffix: false,
+    mdPath: '',
+    lazyLoad: false,
+    resize: false,
   };
   if (option !== undefined) {
     for (let o in option) {

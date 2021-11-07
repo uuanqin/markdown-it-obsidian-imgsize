@@ -2,15 +2,15 @@ const assert = require('assert');
 const fs = require('fs');
 const md = require('markdown-it')();
 const mdLazy = require('markdown-it')();
-const mdPat = require('markdown-it')();
+const mdEnvPat = require('markdown-it')();
 const mdRendererImage = require('../index.js');
 
-md.use(mdRendererImage, {'scaleSuffix': true, 'resize': true});
-mdLazy.use(mdRendererImage, {'scaleSuffix': true, 'lazyLoad': true});
-mdPat.use(mdRendererImage, {'scaleSuffix': true, 'resize': true, 'mdPath': __dirname + '/examples.md'});
+md.use(mdRendererImage, {scaleSuffix: true, resize: true});
+mdLazy.use(mdRendererImage, {scaleSuffix: true, lazyLoad: true});
+mdEnvPat.use(mdRendererImage, {scaleSuffix: true, resize: true, mdPath: __dirname + '/examples.md'});
 
 const example = __dirname + '/examples.txt';
-let mdPath = __dirname + '/examples.md';
+let mdPat = __dirname + '/examples.md';
 const exampleCont = fs.readFileSync(example, 'utf-8').trim();
 let ms = [];
 let ms0 = exampleCont.split(/\n*\[Markdown\]\n/);
@@ -27,9 +27,9 @@ while(n < ms0.length) {
     i++;
   }
   ms[n] = {
-    "markdown": mhs[0],
-    "html": mhs[1],
-    "htmlLazy": mhs[2],
+    markdown: mhs[0],
+    html: mhs[1],
+    htmlLazy: mhs[2],
   };
   n++;
 }
@@ -52,7 +52,7 @@ while(n < ms.length) {
 
   const m = ms[n].markdown;
   const renderEnv = {
-    'mdPath': mdPath,
+    mdPath: mdPat,
   }
   const h = md.render(m, renderEnv);
   try {
@@ -73,12 +73,12 @@ while(n < ms.length) {
   }
 
   if (ms[n].html !== undefined) {
-    const hPat = mdPat.render(m);
+    const hEnvPat = mdEnvPat.render(m);
     try {
-      assert.strictEqual(hPat, ms[n].html);
+      assert.strictEqual(hEnvPat, ms[n].html);
     } catch(e) {
-      console.log('incorrect(mdPath): ');
-      console.log('H: ' + hPat +'C: ' + ms[n].html);
+      console.log('incorrect(mdEnvPat): ');
+      console.log('H: ' + hEnvPat +'C: ' + ms[n].html);
     };
   }
 
