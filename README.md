@@ -54,7 +54,7 @@ console.log(md.render('![A cat.](cat_300ppi.jpg)', {mdPath: mdPat}));
 This is identified by `imageFileName.match(/[@._-]([0-9]+)(x|dpi|ppi)$/)`
 
 
-### Resizing of layout image by title attribute
+### Resizing layout image by title attribute
 
 Option to resize based on the value of the title attribute: `{resize: true}`
 
