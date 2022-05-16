@@ -65,15 +65,20 @@ module.exports = function renderer_image_plugin(md, option) {
   }
 
   function addLazyLoad(imgCont) {
-    imgCont = imgCont.replace(/>$/, ' loading="lazy">');
+    imgCont = imgCont.replace(/( *?\/)?>$/, ' loading="lazy"$1>');
     return imgCont;
   }
 
   md.renderer.rules['image'] = function (tokens, idx, options, env, slf) {
+    let endTagCont = '>';
+    if (options.xhtmlOut) {
+      endTagCont = ' />';
+    }
+
     const token = tokens[idx];
-    let imgCont = '<img src="' + md.utils.escapeHtml(token.attrGet('src')) + '" alt="' + md.utils.escapeHtml(token.content) + '">';
+    let imgCont = '<img src="' + md.utils.escapeHtml(token.attrGet('src')) + '" alt="' + md.utils.escapeHtml(token.content) + '"' + endTagCont;
     if (token.attrGet('title')) {
-      imgCont = imgCont.replace(/>$/, ' title="' + md.utils.escapeHtml(token.attrGet('title')) + '">');
+      imgCont = imgCont.replace(/( *?\/)?>$/, ' title="' + md.utils.escapeHtml(token.attrGet('title')) + '"$1>');
     }
     let img = '';
     if (opt.mdPath) {
@@ -102,7 +107,7 @@ module.exports = function renderer_image_plugin(md, option) {
     setImgSize(token, img);
     if (!token.attrGet('width')) token.attrSet('width', '');
     if (!token.attrGet('height')) token.attrSet('height', '');
-    imgCont = imgCont.replace(/>$/, ' width="' + token.attrGet('width') + '" height="' + token.attrGet('height') + '">');
+    imgCont = imgCont.replace(/( *?\/)?>$/, ' width="' + token.attrGet('width') + '" height="' + token.attrGet('height') + '"$1>');
     if (opt.lazyLoad) {
       imgCont = addLazyLoad(imgCont);
     }
