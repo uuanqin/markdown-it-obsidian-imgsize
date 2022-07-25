@@ -1,31 +1,24 @@
-'use strict';
-
-const fs = require('fs');
 const path = require('path');
+const fetch = require("sync-fetch");
 const sizeOf = require('image-size');
 
 module.exports = function renderer_image_plugin(md, option) {
-
-  let opt = {
+  /*const option = {
     scaleSuffix: false,
     mdPath: '',
     lazyLoad: false,
     resize: false,
-  };
-  if (option !== undefined) {
-    for (let o in option) {
-        opt[o] = option[o];
-    }
-  }
+  };*/
 
-  function setImgSize(imgToken, img) {
-    if (imgToken.attrIndex('src') === undefined) return;
-    const imgSize = sizeOf(img);
-    let w = imgSize.width;
-    let h = imgSize.height;
-    if (imgSize === undefined) return;
+  function setImgSize(token, img, imgData) {
+    if (!imgData) return token;
+
+    let w = imgData.width;
+    let h = imgData.height;
+    //console.log('w: ' + w + ', h: ' + h);
+
     const imgName = path.basename(img, path.extname(img));
-    if (opt.scaleSuffix) {
+    if (option.scaleSuffix) {
       const reg = /[@._-]([0-9]+)(x|dpi|ppi)$/;
       const rs = imgName.match(reg);
       if (rs) {
@@ -39,8 +32,8 @@ module.exports = function renderer_image_plugin(md, option) {
         }
       }
     }
-    const imgTitle = imgToken.attrGet('title');
-    if (imgTitle && opt.resize) {
+    const imgTitle = token.attrGet('title');
+    if (imgTitle && option.resize) {
       const resizeReg = /(?:(?:(?:大きさ|サイズ)の?変更|リサイズ|resize(?:d to)?)? *[:：]? *([0-9]+)([%％]|px)|([0-9]+)([%％]|px)に(?:(?:大きさ|サイズ)を?変更|リサイズ))/i;
       const hasResizeSetting = imgTitle.match(resizeReg);
       if(hasResizeSetting) {
@@ -56,12 +49,12 @@ module.exports = function renderer_image_plugin(md, option) {
           w = Math.round(resizeValue);
           h = Math.round(h * resizeValue / bw);
         }
-        //console.log('w: ' + w + ', h: ' + h);
       }
     }
-    imgToken.attrJoin('width', w);
-    imgToken.attrJoin('height', h);
-    return;
+    //console.log('w: ' + w + ', h: ' + h);
+    token.attrJoin('width', w);
+    token.attrJoin('height', h);
+    return token;
   }
 
   function addLazyLoad(imgCont) {
@@ -69,48 +62,71 @@ module.exports = function renderer_image_plugin(md, option) {
     return imgCont;
   }
 
+  function setLocalImgSrc(imgSrc, option, env) {
+    let img = '';
+    if (option.mdPath) {
+      img = path.dirname(option.mdPath);
+    } else {
+      if (env !== undefined) {
+        if (env.mdPath) {
+          img = path.dirname(env.mdPath);
+        }
+      }
+    }
+    img += path.sep + imgSrc
+    return img;
+  }
+
   md.renderer.rules['image'] = function (tokens, idx, options, env, slf) {
     let endTagCont = '>';
     if (options.xhtmlOut) {
       endTagCont = ' />';
     }
-
     const token = tokens[idx];
-    let imgCont = '<img src="' + md.utils.escapeHtml(token.attrGet('src')) + '" alt="' + md.utils.escapeHtml(token.content) + '"' + endTagCont;
-    if (token.attrGet('title')) {
-      imgCont = imgCont.replace(/( *?\/)?>$/, ' title="' + md.utils.escapeHtml(token.attrGet('title')) + '"$1>');
-    }
-    let img = '';
-    if (opt.mdPath) {
-      img = path.dirname(opt.mdPath);
-    } else {
-      if (env !== undefined) {
-        if (env.mdPath !== undefined) {
-          img = path.dirname(env.mdPath);
-        }
-      }
-    }
-    if(!img) {
-      if (opt.lazyLoad) {
-        imgCont = addLazyLoad(imgCont);
-      }
-      return imgCont;
+    let imgAlt = md.utils.escapeHtml(token.content);
+    let imgSrc = md.utils.escapeHtml(token.attrGet('src'));
+    let imgTitle = md.utils.escapeHtml(token.attrGet('title'));
+    let imgCont = '<img src="' + imgSrc + '"' + endTagCont;
+    imgCont = imgCont.replace(/( src=".*?")/, '$1 alt="' + imgAlt + '"');
+    if (imgTitle) {
+      imgCont = imgCont.replace(/( *?\/)?>$/, ' title="' + imgTitle + '"$1>');
     }
 
-    img += path.sep + token.attrGet('src');
-    if(!fs.existsSync(img)) {
-      if (opt.lazyLoad) {
+    let isNotLocal = /^https?:\/\//.test(imgSrc);
+    let imgData = {};
+
+    if (isNotLocal) {
+      try {
+        const response = fetch(imgSrc);
+        const buffer = response.buffer();
+        imgData = sizeOf(buffer);
+      } catch {
+        console.error('[renderder-image]No image: ' + imgSrc);
+      }
+      if (imgData.width !== undefined) {
+        setImgSize(token, imgSrc, imgData);
+        imgCont = imgCont.replace(/( *?\/)?>$/, ' width="' + token.attrGet('width') + '" height="' + token.attrGet('height') + '"$1>');
+      }
+      if (option.lazyLoad) {
         imgCont = addLazyLoad(imgCont);
       }
-      return imgCont;
+
+    } else {
+      imgSrc = setLocalImgSrc(imgSrc, option, env)
+      try {
+        imgData = sizeOf(imgSrc);
+      } catch {
+        console.error('[renderder-image]No image: ' + imgSrc);
+      }
+      if (imgData.width !== undefined) {
+        setImgSize(token, imgSrc, imgData);
+        imgCont = imgCont.replace(/( *?\/)?>$/, ' width="' + token.attrGet('width') + '" height="' + token.attrGet('height') + '"$1>');
+      }
+      if (option.lazyLoad) {
+        imgCont = addLazyLoad(imgCont);
+      }
     }
-    setImgSize(token, img);
-    if (!token.attrGet('width')) token.attrSet('width', '');
-    if (!token.attrGet('height')) token.attrSet('height', '');
-    imgCont = imgCont.replace(/( *?\/)?>$/, ' width="' + token.attrGet('width') + '" height="' + token.attrGet('height') + '"$1>');
-    if (opt.lazyLoad) {
-      imgCont = addLazyLoad(imgCont);
-    }
+
     return imgCont;
   }
 };

@@ -62,3 +62,17 @@
 [HTML]
 <p><img src="cat@2x.jpg" alt="Figure" title="resize:320px" width="320" height="240"></p>
 
+[Markdown]
+![Figure](dog.jpg)
+[HTML]
+<p><img src="dog.jpg" alt="Figure"></p>
+
+[Markdown]
+![Figure](https://raw.githubusercontent.com/peaceroad/p7d-markdown-it-renderer-image/main/test/cat.jpg)
+[HTML]
+<p><img src="https://raw.githubusercontent.com/peaceroad/p7d-markdown-it-renderer-image/main/test/cat.jpg" alt="Figure" width="400" height="300"></p>
+
+[Markdown]
+![Figure](https://raw.githubusercontent.com/peaceroad/p7d-markdown-it-renderer-image/main/test/dog.jpg)
+[HTML]
+<p><img src="https://raw.githubusercontent.com/peaceroad/p7d-markdown-it-renderer-image/main/test/dog.jpg" alt="Figure"></p>
