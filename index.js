@@ -8,6 +8,7 @@ module.exports = function renderer_image_plugin(md, option) {
     mdPath: '',
     lazyLoad: false,
     resize: false,
+    asyncDecode: false,
   };*/
 
   function setImgSize(token, img, imgData) {
@@ -57,6 +58,11 @@ module.exports = function renderer_image_plugin(md, option) {
     return token;
   }
 
+  function addAsyncDecode(imgCont) {
+    imgCont = imgCont.replace(/( *?\/)?>$/, ' decoding="async"$1>');
+    return imgCont;
+  }
+
   function addLazyLoad(imgCont) {
     imgCont = imgCont.replace(/( *?\/)?>$/, ' loading="lazy"$1>');
     return imgCont;
@@ -91,6 +97,12 @@ module.exports = function renderer_image_plugin(md, option) {
     if (imgTitle) {
       imgCont = imgCont.replace(/( *?\/)?>$/, ' title="' + imgTitle + '"$1>');
     }
+    if (option.asyncDecode) {
+      imgCont = addAsyncDecode(imgCont);
+    }
+    if (option.lazyLoad) {
+      imgCont = addLazyLoad(imgCont);
+    }
 
     let isNotLocal = /^https?:\/\//.test(imgSrc);
     let imgData = {};
@@ -107,9 +119,6 @@ module.exports = function renderer_image_plugin(md, option) {
         setImgSize(token, imgSrc, imgData);
         imgCont = imgCont.replace(/( *?\/)?>$/, ' width="' + token.attrGet('width') + '" height="' + token.attrGet('height') + '"$1>');
       }
-      if (option.lazyLoad) {
-        imgCont = addLazyLoad(imgCont);
-      }
 
     } else {
       imgSrc = setLocalImgSrc(imgSrc, option, env)
@@ -121,9 +130,6 @@ module.exports = function renderer_image_plugin(md, option) {
       if (imgData.width !== undefined) {
         setImgSize(token, imgSrc, imgData);
         imgCont = imgCont.replace(/( *?\/)?>$/, ' width="' + token.attrGet('width') + '" height="' + token.attrGet('height') + '"$1>');
-      }
-      if (option.lazyLoad) {
-        imgCont = addLazyLoad(imgCont);
       }
     }
 

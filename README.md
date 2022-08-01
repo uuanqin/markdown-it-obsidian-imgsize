@@ -94,5 +94,16 @@ By using `{lazyLoad: true}`, it can have `loading="lazy"` attribute.
 md.use(mdRendererImage, {lazyLoad: true});
 
 console.log(md.render('![A cat.](cat@.jpg)', {mdPath: mdPat}));
-// <p><img src="cat.jpg" alt="A cat." width="400" height="300" loading="lazy"></p>
+// <p><img src="cat.jpg" alt="A cat." loading="lazy" width="400" height="300"></p>
+```
+
+### Setting async decode
+
+By using `{asyncDecode: true}`, it can have `decoding="async"` attribute.
+
+```js
+md.use(mdRendererImage, {asyncDecode: true});
+
+console.log(md.render('![A cat.](cat@.jpg)', {mdPath: mdPat}));
+// <p><img src="cat.jpg" alt="A cat." decoding="async" width="400" height="300"></p>
 ```
