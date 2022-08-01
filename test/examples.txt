@@ -3,21 +3,21 @@
 [HTML]
 <p><img src="cat.jpg" alt="" width="400" height="300"></p>
 [HTML:lazy]
-<p><img src="cat.jpg" alt="" width="400" height="300" loading="lazy"></p>
+<p><img src="cat.jpg" alt="" loading="lazy" width="400" height="300"></p>
 
 [Markdown]
 ![Figure](cat.jpg)
 [HTML]
 <p><img src="cat.jpg" alt="Figure" width="400" height="300"></p>
 [HTML:lazy]
-<p><img src="cat.jpg" alt="Figure" width="400" height="300" loading="lazy"></p>
+<p><img src="cat.jpg" alt="Figure" loading="lazy" width="400" height="300"></p>
 
 [Markdown]
 ![Figure](cat.jpg "A cat.")
 [HTML]
 <p><img src="cat.jpg" alt="Figure" title="A cat." width="400" height="300"></p>
 [HTML:lazy]
-<p><img src="cat.jpg" alt="Figure" title="A cat." width="400" height="300" loading="lazy"></p>
+<p><img src="cat.jpg" alt="Figure" title="A cat." loading="lazy" width="400" height="300"></p>
 
 
 [Markdown]
@@ -25,7 +25,7 @@
 [HTML]
 <p><img src="cat_300dpi.jpg" alt="Figure" title="A cat." width="128" height="96"></p>
 [HTML:lazy]
-<p><img src="cat_300dpi.jpg" alt="Figure" title="A cat." width="128" height="96" loading="lazy"></p>
+<p><img src="cat_300dpi.jpg" alt="Figure" title="A cat." loading="lazy" width="128" height="96"></p>
 
 [Markdown]
 ![Figure](cat.jpg "resize:80%")
