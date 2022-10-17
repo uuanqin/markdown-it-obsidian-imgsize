@@ -79,7 +79,8 @@ module.exports = function renderer_image_plugin(md, option) {
         }
       }
     }
-    img += path.sep + imgSrc
+    img += path.sep + imgSrc;
+    img = decodeURI(img);
     return img;
   }
 
@@ -92,7 +93,7 @@ module.exports = function renderer_image_plugin(md, option) {
     let imgAlt = md.utils.escapeHtml(token.content);
     let imgSrc = md.utils.escapeHtml(token.attrGet('src'));
     let imgTitle = md.utils.escapeHtml(token.attrGet('title'));
-    let imgCont = '<img src="' + imgSrc + '"' + endTagCont;
+    let imgCont = '<img src="' + decodeURI(imgSrc) + '"' + endTagCont;
     imgCont = imgCont.replace(/( src=".*?")/, '$1 alt="' + imgAlt + '"');
     if (imgTitle) {
       imgCont = imgCont.replace(/( *?\/)?>$/, ' title="' + imgTitle + '"$1>');

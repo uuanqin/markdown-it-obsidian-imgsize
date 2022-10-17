@@ -76,3 +76,8 @@
 ![Figure](https://raw.githubusercontent.com/peaceroad/p7d-markdown-it-renderer-image/main/test/dog.jpg)
 [HTML]
 <p><img src="https://raw.githubusercontent.com/peaceroad/p7d-markdown-it-renderer-image/main/test/dog.jpg" alt="Figure"></p>
+
+[Markdown]
+![Figure](猫.jpg)
+[HTML]
+<p><img src="猫.jpg" alt="Figure" width="400" height="300"></p>
