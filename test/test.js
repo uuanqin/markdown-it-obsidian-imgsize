@@ -49,7 +49,7 @@ for(let i=1;i < cases.length;i++) {
   } catch(e) {
     console.log('RESULT: ' + html_text +'EXPECT: ' + cases[i].html);
     continue;
-  };
+  }
   success_num++;
   console.log('Pass.\n');
 }

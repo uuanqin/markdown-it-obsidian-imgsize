@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-obsidian-imgsize",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A markdown-it plugin, adding width (and height) attributes to image elements, according to the syntax of external images in Obsidian.",
   "keywords": [
     "markdown",
