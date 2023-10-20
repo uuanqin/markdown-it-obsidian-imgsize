@@ -16,7 +16,7 @@
 <p><img src="cat.jpg" alt="A cat" width="100px" height="200px"></p>
 ```
 
-更多例子详见[examples.txt](./test/examples.txt)。与插件[markdown-it-renderer-image](https://www.npmjs.com/package/@peaceroad/markdown-it-renderer-image)不同的是，
+更多例子详见[examples.md](./test/examples.md)。与插件[markdown-it-renderer-image](https://www.npmjs.com/package/@peaceroad/markdown-it-renderer-image)不同的是，
 本插件在处理网络图片时无需联网。
 
 ## 安装
@@ -35,7 +35,7 @@ md.use(mdImgSizePlg);
 const content = '![A cat|100](cat.jpg)';
 console.log(md.render(content));
 // <p><img src="cat.jpg" alt="A cat" width="100px"></p>
-// 更多例子详见 './test/examples.txt'
+// 更多例子详见 './test/examples.md'
 ```
 
 ## 相关插件

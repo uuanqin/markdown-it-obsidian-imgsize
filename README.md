@@ -16,7 +16,7 @@ to
 <p><img src="cat.jpg" alt="A cat" width="100px" height="200px"></p>
 ```
 
-More cases are in [examples.txt](./test/examples.txt). Different from [markdown-it-renderer-image](https://www.npmjs.com/package/@peaceroad/markdown-it-renderer-image), 
+More cases are in [examples.md](./test/examples.md). Different from [markdown-it-renderer-image](https://www.npmjs.com/package/@peaceroad/markdown-it-renderer-image), 
 this plugin does not use the Internet when processing online images.
 
 ## Install
@@ -35,7 +35,7 @@ md.use(mdImgSizePlg);
 const content = '![A cat|100](cat.jpg)';
 console.log(md.render(content));
 // <p><img src="cat.jpg" alt="A cat" width="100px"></p>
-// See './test/examples.txt' for more examples
+// See './test/examples.md' for more examples
 ```
 
 ## Related Plugins
