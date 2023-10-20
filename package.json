@@ -1,26 +1,32 @@
 {
-  "name": "@peaceroad/markdown-it-renderer-image",
-  "version": "0.1.9",
-  "description": "A markdown-it plugin. This add width and height attributes to img elements.",
+  "name": "markdown-it-obsidian-imgsize",
+  "version": "0.1.0",
+  "description": "A markdown-it plugin, adding width (and height) attributes to image elements, according to the syntax of external images in Obsidian.",
+  "keywords": [
+    "markdown",
+    "markdown-it",
+    "markdown-it-plugin",
+    "img",
+    "image",
+    "image size",
+    "imgsize",
+    "obsidian"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "node ./test/test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/peaceroad/p7d-markdown-it-renderer-image.git"
+    "url": "git+https://github.com/uuanqin/markdown-it-obsidian-imgsize.git"
   },
-  "author": "peaceroad <peaceroad@gmail.com>",
+  "author": "wuanqin <wuanqin@mail.ustc.edu.cn>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/peaceroad/p7d-markdown-it-renderer-image/issues"
+    "url": "https://github.com/uuanqin/markdown-it-obsidian-imgsize/issues"
   },
-  "homepage": "https://github.com/peaceroad/p7d-markdown-it-renderer-image#readme",
-  "dependencies": {
-    "image-size": "^1.0.0",
-    "sync-fetch": "^0.4.1"
-  },
+  "homepage": "https://github.com/uuanqin/markdown-it-obsidian-imgsize#readme",
   "devDependencies": {
-    "markdown-it": "^12.1.0"
+    "markdown-it": "^13.0.2"
   }
 }

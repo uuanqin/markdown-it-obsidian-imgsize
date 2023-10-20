@@ -1,83 +1,106 @@
-[Markdown]
-![](cat.jpg)
-[HTML]
-<p><img src="cat.jpg" alt="" width="400" height="300"></p>
-[HTML:lazy]
-<p><img src="cat.jpg" alt="" loading="lazy" width="400" height="300"></p>
-
-[Markdown]
-![Figure](cat.jpg)
-[HTML]
-<p><img src="cat.jpg" alt="Figure" width="400" height="300"></p>
-[HTML:lazy]
-<p><img src="cat.jpg" alt="Figure" loading="lazy" width="400" height="300"></p>
-
-[Markdown]
-![Figure](cat.jpg "A cat.")
-[HTML]
-<p><img src="cat.jpg" alt="Figure" title="A cat." width="400" height="300"></p>
-[HTML:lazy]
-<p><img src="cat.jpg" alt="Figure" title="A cat." loading="lazy" width="400" height="300"></p>
+# TEST CASES
+# 
+# -----------------------------------
+# A case is like:
+# ```
+# [Markdown]
+# Original Texts.
+# [HTML]
+# Rendered Texts.
+# ```
+# -----------------------------------
+# 
+# Written By wuanqin (wuanqin@mail.ustc.edu.cn), base on k_taka's work.
+# 
+# Note: test.js recognizes comments in this file by RegExp '/# .*\n/gm', which means that
+#       comments should start with '# ' in each line.
 
 
-[Markdown]
-![Figure](cat_300dpi.jpg "A cat.")
-[HTML]
-<p><img src="cat_300dpi.jpg" alt="Figure" title="A cat." width="128" height="96"></p>
-[HTML:lazy]
-<p><img src="cat_300dpi.jpg" alt="Figure" title="A cat." loading="lazy" width="128" height="96"></p>
+# =================== Basic ========================
 
+# CommonMark
 [Markdown]
-![Figure](cat.jpg "resize:80%")
+![Figure](k_taka's_cat.jpg)
 [HTML]
-<p><img src="cat.jpg" alt="Figure" title="resize:80%" width="320" height="240"></p>
+<p><img src="k_taka's_cat.jpg" alt="Figure"></p>
 
+# Alt with space
 [Markdown]
-![Figure](cat.jpg "The shown photo have been resized to 50%.")
+![A cat](k_taka's_cat.jpg)
 [HTML]
-<p><img src="cat.jpg" alt="Figure" title="The shown photo have been resized to 50%." width="200" height="150"></p>
+<p><img src="k_taka's_cat.jpg" alt="A cat"></p>
 
+# Empty Alt
 [Markdown]
-![Figure](cat.jpg "リサイズ：80%")
+![](k_taka's_cat.jpg)
 [HTML]
-<p><img src="cat.jpg" alt="Figure" title="リサイズ：80%" width="320" height="240"></p>
+<p><img src="k_taka's_cat.jpg" alt=""></p>
 
+# With A Title
 [Markdown]
-![Figure](cat.jpg "80%にサイズ変更")
+![Figure](k_taka's_cat.jpg "A cat.")
 [HTML]
-<p><img src="cat.jpg" alt="Figure" title="80%にサイズ変更" width="320" height="240"></p>
+<p><img src="k_taka's_cat.jpg" alt="Figure" title="A cat."></p>
 
+# Online Picture
 [Markdown]
-![Figure](cat@2x.jpg "resize:50%")
+![Figure](https://cdn.gallery.uuanqin.top/img/k_taka's_cat.webp)
 [HTML]
-<p><img src="cat@2x.jpg" alt="Figure" title="resize:50%" width="100" height="75"></p>
+<p><img src="https://cdn.gallery.uuanqin.top/img/k_taka's_cat.webp" alt="Figure"></p>
 
-[Markdown]
-![Figure](cat.jpg "resize:320px")
-[HTML]
-<p><img src="cat.jpg" alt="Figure" title="resize:320px" width="320" height="240"></p>
+# ===================== OFM ===================
 
+# OFM - designate width of a img
 [Markdown]
-![Figure](cat@2x.jpg "resize:320px")
+![A cat|100](k_taka's_cat.jpg)
 [HTML]
-<p><img src="cat@2x.jpg" alt="Figure" title="resize:320px" width="320" height="240"></p>
+<p><img src="k_taka's_cat.jpg" alt="A cat" width="100px"></p>
 
+# Designate width and height of a img
 [Markdown]
-![Figure](dog.jpg)
+![A cat|100x200](k_taka's_cat.jpg)
 [HTML]
-<p><img src="dog.jpg" alt="Figure"></p>
+<p><img src="k_taka's_cat.jpg" alt="A cat" width="100px" height="200px"></p>
 
+# Spaces Are Allowed
 [Markdown]
-![Figure](https://raw.githubusercontent.com/peaceroad/p7d-markdown-it-renderer-image/main/test/cat.jpg)
+![A cat|  100](k_taka's_cat.jpg)
 [HTML]
-<p><img src="https://raw.githubusercontent.com/peaceroad/p7d-markdown-it-renderer-image/main/test/cat.jpg" alt="Figure" width="400" height="300"></p>
+<p><img src="k_taka's_cat.jpg" alt="A cat" width="100px"></p>
 
+# Spaces Are Allowed
 [Markdown]
-![Figure](https://raw.githubusercontent.com/peaceroad/p7d-markdown-it-renderer-image/main/test/dog.jpg)
+![A cat| 100 ](k_taka's_cat.jpg)
 [HTML]
-<p><img src="https://raw.githubusercontent.com/peaceroad/p7d-markdown-it-renderer-image/main/test/dog.jpg" alt="Figure"></p>
+<p><img src="k_taka's_cat.jpg" alt="A cat" width="100px"></p>
 
+# Spaces Are Allowed
 [Markdown]
-![Figure](猫.jpg)
+![A cat|100 x 200](k_taka's_cat.jpg)
 [HTML]
-<p><img src="猫.jpg" alt="Figure" width="400" height="300"></p>
+<p><img src="k_taka's_cat.jpg" alt="A cat" width="100px" height="200px"></p>
+
+# Spaces Are Allowed
+[Markdown]
+![A cat| 100x200 ](k_taka's_cat.jpg)
+[HTML]
+<p><img src="k_taka's_cat.jpg" alt="A cat" width="100px" height="200px"></p>
+
+# Unable to identify
+[Markdown]
+![A cat|100X200](k_taka's_cat.jpg)
+[HTML]
+<p><img src="k_taka's_cat.jpg" alt="A cat|100X200"></p>
+
+# Unable to identify
+[Markdown]
+![A cat|100-x200](k_taka's_cat.jpg)
+[HTML]
+<p><img src="k_taka's_cat.jpg" alt="A cat|100-x200"></p>
+
+# Unable to identify
+[Markdown]
+![A cat|100x2n00](k_taka's_cat.jpg)
+[HTML]
+<p><img src="k_taka's_cat.jpg" alt="A cat|100x2n00"></p>
+
