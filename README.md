@@ -1,6 +1,6 @@
 # markdown-it-obsidian-imgsize
 
-language: English | [中文](./READEME_zh.md)
+language: English | [中文](./README_zh.md)
 
 A markdown-it plugin, adding width (and height) attributes to image elements.
 
