@@ -1,86 +1,57 @@
+/*
+  TEST.JS
+
+  Run test: npm run test
+
+  You can add more cases on examples.txt
+  Written By wuanqin (wuanqin@mail.ustc.edu.cn), base on k_taka's work.
+ */
+
 const assert = require('assert');
 const fs = require('fs');
 const md = require('markdown-it')();
-const mdLazy = require('markdown-it')();
-const mdEnvPat = require('markdown-it')();
-const mdRendererImage = require('../index.js');
+const mdImgSizePlg = require('../index.js');
 
-md.use(mdRendererImage, {scaleSuffix: true, resize: true});
-mdLazy.use(mdRendererImage, {scaleSuffix: true, lazyLoad: true});
-mdEnvPat.use(mdRendererImage, {scaleSuffix: true, resize: true, mdPath: __dirname + '/examples.md'});
+md.use(mdImgSizePlg);
 
-const example = __dirname + '/examples.txt';
-let mdPat = __dirname + '/examples.md';
-const exampleCont = fs.readFileSync(example, 'utf-8').trim();
-let ms = [];
-let ms0 = exampleCont.split(/\n*\[Markdown\]\n/);
-let n = 1;
-while(n < ms0.length) {
-  let mhs = ms0[n].split(/\n+\[HTML[^\]]*?\]\n/);
-  let i = 1;
-  while (i < mhs.length) {
-    if (mhs[i] === undefined) {
-      mhs[i] = '';
+const example_path = __dirname + '/examples.txt';
+var content = fs.readFileSync(example_path, 'utf-8').trim();
+// Identify comments
+const comments_RE = /# .*\n/gm;
+content = content.replace(comments_RE,"");
+
+
+let cases = [];
+let cases_texts = content.split(/\n*\[Markdown\]\n/);
+// cases_texts[0] is an empty string or a blank string
+for(let i = 1;i < cases_texts.length;i++) {
+  let text_segments = cases_texts[i].split(/\n+\[HTML[^\]]*?\]\n/); // 可以删掉问号的
+  for (let j=1;j < text_segments.length;j++) {
+    if (text_segments[j] === undefined) {
+      text_segments[j] = '';
     } else {
-      mhs[i] = mhs[i].replace(/$/,'\n');
+      text_segments[j] = text_segments[j].replace(/$/,'\n');
     }
-    i++;
   }
-  ms[n] = {
-    markdown: mhs[0],
-    html: mhs[1],
-    htmlLazy: mhs[2],
+  cases[i] = {
+    markdown: text_segments[0],
+    html: text_segments[1],
   };
-  n++;
 }
 
-n = 1;
+var success_num = 0;
+for(let i=1;i < cases.length;i++) {
+  console.log('Test: ' + i + ' >>>');
 
-const h0 = md.render(fs.readFileSync('./test/test.md', 'utf-8').trim(), {'mdPath': './test/test.md'});
-const c0 = '<p><img src="cat.jpg" alt="A cat" width="400" height="300"></p>\n';
-try {
-  assert.strictEqual(h0, c0);
-} catch(e) {
-  console.log('incorrect(0): ');
-  console.log('H: ' + h0 +'C: ' + c0);
-};
-
-while(n < ms.length) {
-  //if (n !== 1) { n++; continue };
-  console.log('Test: ' + n + ' >>>');
-  //console.log(ms[n].markdown);
-
-  const m = ms[n].markdown;
-  const renderEnv = {
-    mdPath: mdPat,
-  }
-  const h = md.render(m, renderEnv);
+  const html_text = md.render(cases[i].markdown);
   try {
-    assert.strictEqual(h, ms[n].html);
+    assert.strictEqual(html_text, cases[i].html);
   } catch(e) {
-    console.log('incorrect: ');
-    console.log('H: ' + h +'C: ' + ms[n].html);
+    console.log('RESULT: ' + html_text +'EXPECT: ' + cases[i].html);
+    continue;
   };
-
-  if (ms[n].htmlLazy !== undefined) {
-    const hLazy = mdLazy.render(m, renderEnv);
-    try {
-      assert.strictEqual(hLazy, ms[n].htmlLazy);
-    } catch(e) {
-      console.log('incorrect(Lazy): ');
-      console.log('H: ' + hLazy +'C: ' + ms[n].htmlLazy);
-    };
-  }
-
-  if (ms[n].html !== undefined) {
-    const hEnvPat = mdEnvPat.render(m);
-    try {
-      assert.strictEqual(hEnvPat, ms[n].html);
-    } catch(e) {
-      console.log('incorrect(mdEnvPat): ');
-      console.log('H: ' + hEnvPat +'C: ' + ms[n].html);
-    };
-  }
-
-  n++;
+  success_num++;
+  console.log('Pass.\n');
 }
+
+console.log(`${success_num}/${cases.length-1} Case(s) Pass.\n`);
