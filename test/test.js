@@ -3,7 +3,7 @@
 
   Run test: npm run test
 
-  You can add more cases on examples.txt
+  You can add more cases on examples.md
   Written By wuanqin (wuanqin@mail.ustc.edu.cn), base on k_taka's work.
  */
 
@@ -14,7 +14,7 @@ const mdImgSizePlg = require('../index.js');
 
 md.use(mdImgSizePlg);
 
-const example_path = __dirname + '/examples.txt';
+const example_path = __dirname + '/examples.md';
 var content = fs.readFileSync(example_path, 'utf-8').trim();
 // Identify comments
 const comments_RE = /# .*\n/gm;
@@ -49,7 +49,7 @@ for(let i=1;i < cases.length;i++) {
   } catch(e) {
     console.log('RESULT: ' + html_text +'EXPECT: ' + cases[i].html);
     continue;
-  };
+  }
   success_num++;
   console.log('Pass.\n');
 }
