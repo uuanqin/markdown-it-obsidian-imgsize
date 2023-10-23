@@ -1,5 +1,5 @@
 # TEST CASES
-# 
+# If you're on Github, it's recommended to view this file in `Code` mode
 # -----------------------------------
 # A case is like:
 # ```

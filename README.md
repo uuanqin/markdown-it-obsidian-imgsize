@@ -1,5 +1,8 @@
 # markdown-it-obsidian-imgsize
 
+![npm](https://img.shields.io/npm/v/markdown-it-obsidian-imgsize)
+![dt](https://img.shields.io/npm/dt/markdown-it-obsidian-imgsize)
+
 language: English | [中文](./README_zh.md)
 
 A markdown-it plugin, adding width (and height) attributes to image elements.

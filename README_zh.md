@@ -1,5 +1,8 @@
 # markdown-it-obsidian-imgsize
 
+![npm](https://img.shields.io/npm/v/markdown-it-obsidian-imgsize)
+![dt](https://img.shields.io/npm/dt/markdown-it-obsidian-imgsize)
+
 语言: [English](./README.md) | 中文
 
 为图像元素增加width属性（以及height属性）的markdown-it插件。
